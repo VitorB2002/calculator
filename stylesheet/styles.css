@@ -22,7 +22,6 @@ body {
 }
 
 #icon-container {
-    background-color: #e1d9d6;
     width: 75px;
     height: auto;
     border-radius: 25%;
@@ -46,9 +45,14 @@ a {
     color: #e1d9d6;
 }
 
+#icon-container,
+.calculator-container,
+.footer {
+    background-color: #e1d9d6;
+}
+
 .footer {
     display: flex;
-    background-color: #8e8684;
     align-items: center;
     justify-content: center;
     width: 1000px;
