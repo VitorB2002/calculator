@@ -12,6 +12,12 @@ body {
     align-items: center;
 }
 
+#icon-container,
+.calculator-container,
+.footer {
+    background-color: #e1d9d6;
+}
+
 .header{
     display: flex;
     width: 1200px;
@@ -45,10 +51,22 @@ a {
     color: #e1d9d6;
 }
 
-#icon-container,
-.calculator-container,
-.footer {
-    background-color: #e1d9d6;
+.calculator-container {
+    display: flex;
+    width: 1000px;
+}
+
+#numbers-container {
+    display: flex;
+    width: 500px;
+    gap: 10px;
+    padding: 20px;
+    flex-wrap: wrap;
+}
+
+button {
+    width: 125px;
+    height: 100px;
 }
 
 .footer {
