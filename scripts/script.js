@@ -22,6 +22,70 @@ function addDisplayContent(content){
     display.innerHTML = content;
 }
 
+function equation(content){
+    let num1 = "";
+    let num2 = "";
+    let operation = 0;
+    let result = 1;
+    let index = 0;
+    let lastIndex;
+
+    //num1 definition
+    while(index < content.length){
+
+        lastIndex = index;
+
+        switch(content[index]){
+            case "+":
+                operation = 1;
+                index = content.length;
+                break;
+            case "-":
+                operation = 2;
+                index = content.length;
+                break;
+            case "*":
+                operation = 3;
+                index = content.length;
+                break;
+            case "/":
+                operation = 4;
+                index = content.length;
+                break;
+            default:
+                num1 += content[index];
+                break;
+        }
+
+        index++;
+    }
+
+    //num2 definition
+    for(let i = lastIndex + 1; i < content.length; i++){
+        num2 += content[i];
+    }
+
+    switch(operation){
+        case 1:
+            result = sum(num1*1, num2*1);
+            break;
+        case 2:
+            result = sub(num1*1, num2*1);
+            break;
+        case 3:
+            result = mul(num1*1, num2*1);
+            break;
+        case 4:
+            result = div(num1*1, num2*1);
+            break;
+        default:
+            console.log("Syntax error");
+            break;
+    }
+
+    console.log(result);
+}
+
 function sum(a, b){
     return a + b;
 }
@@ -96,6 +160,7 @@ clear.addEventListener("click", () => {
 });
 
 equals.addEventListener("click", () => {
+    equation(content);
 });
 
 //Operators keyboard events
@@ -104,14 +169,17 @@ sumBtn.addEventListener("click", () => {
     content += "+";
     addDisplayContent(content);
 });
+
 subBtn.addEventListener("click", () => {
     content += "-";
     addDisplayContent(content);
 });
+
 mulBtn.addEventListener("click", () => {
     content += "*";
     addDisplayContent(content);
 });
+
 divBtn.addEventListener("click", () => {
     content += "/";
     addDisplayContent(content);
