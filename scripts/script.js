@@ -1,3 +1,4 @@
+const display = document.getElementById("display");
 const oneBtn = document.getElementById("one");
 const twoBtn = document.getElementById("two");
 const threeBtn = document.getElementById("three");
@@ -10,51 +11,66 @@ const nineBtn = document.getElementById("nine");
 const zeroBtn = document.getElementById("zero");
 const clear = document.getElementById("clear");
 const equals = document.getElementById("equals");
+let content = "";
+
+function addDisplayContent(content){
+    display.innerHTML = content;
+}
 
 zeroBtn.addEventListener("click", () => {
-    console.log("0");
+        content += "0";
+        addDisplayContent(content);
     });
 
 oneBtn.addEventListener("click", () => { 
-    console.log("1");
+        content += "1";
+        addDisplayContent(content);
     });
 
 twoBtn.addEventListener("click", () => {
-     console.log("2");
+        content += "2";
+        addDisplayContent(content);
     });
 
 threeBtn.addEventListener("click", () => {
-     console.log("3");
+        content += "3";
+        addDisplayContent(content);
     });
 
 fourBtn.addEventListener("click", () => {
-     console.log("4");
+        content += "4";
+        addDisplayContent(content);
     });
 
 fiveBtn.addEventListener("click", () => {
-     console.log("5");
+        content += "5";
+        addDisplayContent(content);
     });
 
 sixBtn.addEventListener("click", () => {
-     console.log("6");
+        content += "6";
+        addDisplayContent(content);
     });
 
 sevenBtn.addEventListener("click", () => {
-     console.log("7");
+        content += "7";
+        addDisplayContent(content);
     });
 
 eightBtn.addEventListener("click", () => {
-     console.log("8");
+        content += "8";
+        addDisplayContent(content);
     });
 
 nineBtn.addEventListener("click", () => {
-     console.log("9");
+        content += "9";
+        addDisplayContent(content);
     });
 
 clear.addEventListener("click", () => {
-    console.log("clear");
+        content = "";
+        addDisplayContent(content);
     });
 
 equals.addEventListener("click", () => {
-    console.log("equals");
     });
