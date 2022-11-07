@@ -30,6 +30,12 @@ function equation(content){
     let index = 0;
     let lastIndex;
 
+    if(content[0] == "+" || content[0] == "-" || content[0] == "*" || content[0] == "/"){
+        content = "SYNTAX ERROR";
+        addDisplayContent(content);
+        return
+    }
+
     //num1 definition
     while(index < content.length){
 
@@ -79,11 +85,14 @@ function equation(content){
             result = div(num1*1, num2*1);
             break;
         default:
-            console.log("Syntax error");
-            break;
+            content = "SYNTAX ERROR";
+            addDisplayContent(content);
+            return;
     }
 
-    console.log(result);
+    content += " = " + result;
+    addDisplayContent(content);
+    return;
 }
 
 function sum(a, b){
