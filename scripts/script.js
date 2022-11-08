@@ -126,9 +126,8 @@ function equation(content){
         }   
     }
 
-    console.log(numbersArr);
-    console.log(operatorsArr);
-    console.log(operation);
+    content += " = " + numbersArr[0];
+    addDisplayContent(content);
 }
 
 function sum(a, b){
