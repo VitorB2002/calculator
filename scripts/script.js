@@ -86,22 +86,25 @@ function equation(content){
         return
     }
 
-    let originalNumbers = numbersArr;
-    let mulCheck = false;
-
     //Multiplication priority
-    while(mulCheck != true){
-        for(let i = 0; i < operatorsArr.length; i++){
-            if(operatorsArr[i] == "*"){
-                operation = mul(numbersArr[i], numbersArr[i+1]);
-                numbersArr.splice(i, 2, operation);
-                operatorsArr.splice(i, 1);
-                mulCheck = true;
-                i--;
-            }   
-        }
+    for(let i = 0; i < operatorsArr.length; i++){
+        if(operatorsArr[i] == "*"){
+            operation = mul(numbersArr[i], numbersArr[i+1]);
+            numbersArr.splice(i, 2, operation);
+            operatorsArr.splice(i, 1);
+            i--;
+        }   
     }
-    
+
+    //Division priority
+    for(let i = 0; i < operatorsArr.length; i++){
+        if(operatorsArr[i] == "/"){
+            operation = div(numbersArr[i], numbersArr[i+1]);
+            numbersArr.splice(i, 2, operation);
+            operatorsArr.splice(i, 1);
+            i--;
+        }   
+    }
 
     console.log(numbersArr);
     console.log(operatorsArr);
