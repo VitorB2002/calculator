@@ -23,76 +23,56 @@ function addDisplayContent(content){
 }
 
 function equation(content){
-    let num1 = "";
-    let num2 = "";
-    let operation = 0;
-    let result = 1;
-    let index = 0;
-    let lastIndex;
+    let numbersArr = [];
+    let operatorsArr = [];
+    let num = "";
 
     if(content[0] == "+" || content[0] == "-" || content[0] == "*" || content[0] == "/"){
         content = "SYNTAX ERROR";
         addDisplayContent(content);
         return
+    }   else if(content[content.length] == "+" || content[content.length] == "-" || content[content.length] == "*" || content[content.length] == "/"){
+        content = "SYNTAX ERROR";
+        addDisplayContent(content);
+        return
     }
 
-    //num1 definition
-    while(index < content.length){
+    for(let i = 0; i < content.length; i++){
 
-        lastIndex = index;
-
-        switch(content[index]){
+        switch(content[i]){
             case "+":
-                operation = 1;
-                index = content.length;
+                    numbersArr.push(num*1);
+                    operatorsArr.push("+");
+                    num = "";
                 break;
             case "-":
-                operation = 2;
-                index = content.length;
+                    numbersArr.push(num*1);
+                    operatorsArr.push("-");
+                    num = "";
                 break;
             case "*":
-                operation = 3;
-                index = content.length;
+                    numbersArr.push(num*1);
+                    operatorsArr.push("*");
+                    num = "";
                 break;
             case "/":
-                operation = 4;
-                index = content.length;
+                    numbersArr.push(num*1);
+                    operatorsArr.push("/");
+                    num = "";
                 break;
             default:
-                num1 += content[index];
+                    num += content[i];
                 break;
         }
 
-        index++;
     }
 
-    //num2 definition
-    for(let i = lastIndex + 1; i < content.length; i++){
-        num2 += content[i];
+    if(num != ""){
+        numbersArr.push(num*1);
     }
 
-    switch(operation){
-        case 1:
-            result = sum(num1*1, num2*1);
-            break;
-        case 2:
-            result = sub(num1*1, num2*1);
-            break;
-        case 3:
-            result = mul(num1*1, num2*1);
-            break;
-        case 4:
-            result = div(num1*1, num2*1);
-            break;
-        default:
-            content = "SYNTAX ERROR";
-            addDisplayContent(content);
-            return;
-    }
-
-    content += " = " + result;
-    addDisplayContent(content);
-    return;
+    console.log(numbersArr);
+    console.log(operatorsArr);
 }
 
 function sum(a, b){
