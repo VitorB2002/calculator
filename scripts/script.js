@@ -25,6 +25,7 @@ function addDisplayContent(content){
 function equation(content){
     let numbersArr = [];
     let operatorsArr = [];
+    let operation = 0;
     let num = "";
 
     if(content[0] == "+" || content[0] == "-" || content[0] == "*" || content[0] == "/"){
@@ -41,22 +42,30 @@ function equation(content){
 
         switch(content[i]){
             case "+":
-                    numbersArr.push(num*1);
+                    if(num != ""){
+                        numbersArr.push(num*1);
+                    }
                     operatorsArr.push("+");
                     num = "";
                 break;
             case "-":
-                    numbersArr.push(num*1);
+                    if(num != ""){
+                        numbersArr.push(num*1);
+                    }
                     operatorsArr.push("-");
                     num = "";
                 break;
             case "*":
-                    numbersArr.push(num*1);
+                    if(num != ""){
+                        numbersArr.push(num*1);
+                    }
                     operatorsArr.push("*");
                     num = "";
                 break;
             case "/":
-                    numbersArr.push(num*1);
+                    if(num != ""){
+                        numbersArr.push(num*1);
+                    }
                     operatorsArr.push("/");
                     num = "";
                 break;
@@ -71,8 +80,32 @@ function equation(content){
         numbersArr.push(num*1);
     }
 
+    if(numbersArr.length <= operatorsArr.length){
+        content = "SYNTAX ERROR";
+        addDisplayContent(content);
+        return
+    }
+
+    let originalNumbers = numbersArr;
+    let mulCheck = false;
+
+    //Multiplication priority
+    while(mulCheck != true){
+        for(let i = 0; i < operatorsArr.length; i++){
+            if(operatorsArr[i] == "*"){
+                operation = mul(numbersArr[i], numbersArr[i+1]);
+                numbersArr.splice(i, 2, operation);
+                operatorsArr.splice(i, 1);
+                mulCheck = true;
+                i--;
+            }   
+        }
+    }
+    
+
     console.log(numbersArr);
     console.log(operatorsArr);
+    console.log(operation);
 }
 
 function sum(a, b){
