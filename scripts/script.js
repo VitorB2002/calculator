@@ -106,6 +106,16 @@ function equation(content){
         }   
     }
 
+    //Sum priority
+    for(let i = 0; i < operatorsArr.length; i++){
+        if(operatorsArr[i] == "+"){
+            operation = sum(numbersArr[i], numbersArr[i+1]);
+            numbersArr.splice(i, 2, operation);
+            operatorsArr.splice(i, 1);
+            i--;
+        }   
+    }
+
     console.log(numbersArr);
     console.log(operatorsArr);
     console.log(operation);
