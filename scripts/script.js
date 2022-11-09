@@ -1,4 +1,7 @@
+//Document elements
 const display = document.getElementById("display");
+
+//Numeric buttons
 const oneBtn = document.getElementById("one");
 const twoBtn = document.getElementById("two");
 const threeBtn = document.getElementById("three");
@@ -10,11 +13,14 @@ const eightBtn = document.getElementById("eight");
 const nineBtn = document.getElementById("nine");
 const zeroBtn = document.getElementById("zero");
 const clear = document.getElementById("clear");
+
+//Operators buttons
 const equals = document.getElementById("equals");
 const sumBtn = document.getElementById("sum");
 const subBtn = document.getElementById("sub");
 const mulBtn = document.getElementById("mul");
 const divBtn = document.getElementById("div");
+
 let operations = 0;
 let content = "";
 
@@ -27,6 +33,8 @@ function equation(content){
     let operator;
     let firstElement = 1;
     let secondElement = 1;
+    let operationResult;
+    let operatorIndex;
 
     if(content[0] == "+" || content[0] == "*" || content[0] == "/"){
         content = "SYNTAX ERROR";
@@ -48,6 +56,7 @@ function equation(content){
     for(let i = 0; i < content.length; i++){
         switch(content[i]){
             case "+":
+                    operatorIndex = i;
                     i = content.length;
                     operator = "+";
                     firstElement *= num;
@@ -55,6 +64,7 @@ function equation(content){
                 break;
             case "-":
                     if(i != 0){
+                        operatorIndex = i;
                         i = content.length;
                         operator = "-";
                         firstElement *= num;
@@ -62,16 +72,18 @@ function equation(content){
                     }
                 break;
             case "*":
+                    operatorIndex = i;
                     i = content.length;
                     operator = "*";
                     firstElement *= num;
                     num = "";
                 break;
             case "/":
+                    operatorIndex = i;
                     i = content.length;
                     operator = "/";
                     firstElement *= num;
-                    num = "/";
+                    num = "";
                 break;
             default:
                     num += content[i];
@@ -79,100 +91,36 @@ function equation(content){
         }
     }
 
-    console.log(operator);
-    console.log(firstElement);
-
-    
-    /* for(let i = 0; i < content.length; i++){
-
+    //Second element definition
+    for(let i = operatorIndex+1; i < content.length; i++){
         switch(content[i]){
             case "+":
-                    if(num != ""){
-                        numbersArr.push(num*1);
-                    }
-                    operatorsArr.push("+");
-                    num = "";
+                    i = content.length;
+                    secondElement *= num;
                 break;
             case "-":
-                    if(num != ""){
-                        numbersArr.push(num*1);
+                    if(i != 0){
+                        i = content.length;
+                        secondElement *= num;
                     }
-                    operatorsArr.push("-");
-                    num = "";
                 break;
             case "*":
-                    if(num != ""){
-                        numbersArr.push(num*1);
-                    }
-                    operatorsArr.push("*");
-                    num = "";
+                    i = content.length;
+                    secondElement *= num;
                 break;
             case "/":
-                    if(num != ""){
-                        numbersArr.push(num*1);
-                    }
-                    operatorsArr.push("/");
-                    num = "";
+                    i = content.length;
+                    secondElement *= num;
                 break;
             default:
                     num += content[i];
                 break;
         }
-
-    } */
-
-    /* if(num != ""){
-        numbersArr.push(num*1);
     }
 
-    if(numbersArr.length <= operatorsArr.length){
-        content = "SYNTAX ERROR";
-        addDisplayContent(content);
-        return
-    }
-
-    //Multiplication priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "*"){
-            operation = mul(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    //Division priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "/"){
-            operation = div(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    //Sum priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "+"){
-            operation = sum(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    //Sub priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "-"){
-            operation = sub(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    content += " = " + numbersArr[0];
-    addDisplayContent(content); */
+    console.log(firstElement);
+    console.log(operator);
+    console.log(secondElement);
 }
 
 function sum(a, b){
@@ -261,6 +209,7 @@ sumBtn.addEventListener("click", () => {
         content += "+";
         addDisplayContent(content);
     }   else{
+        content += "+";
         equation(content);
     }
 });
@@ -275,6 +224,7 @@ subBtn.addEventListener("click", () => {
         content += "-";
         addDisplayContent(content);
     }   else{
+        content += "-";
         equation(content);
     }
 });
@@ -286,6 +236,7 @@ mulBtn.addEventListener("click", () => {
         content += "*";
         addDisplayContent(content);
     }   else{
+        content += "*";
         equation(content);
     }
 });
@@ -297,6 +248,7 @@ divBtn.addEventListener("click", () => {
         content += "/";
         addDisplayContent(content);
     }   else{
+        content += "/";
         equation(content);
     }
 });
