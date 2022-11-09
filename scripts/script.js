@@ -118,9 +118,22 @@ function equation(content){
         }
     }
 
-    console.log(firstElement);
-    console.log(operator);
-    console.log(secondElement);
+    switch(operator){
+        case "+":
+            operationResult = add(firstElement, secondElement);
+            break;
+        case "-":
+            operationResult = sub(firstElement,secondElement);
+            break;
+        case "*":
+            operationResult = mul(firstElement,secondElement);
+            break;
+        case "/":
+            operationResult = div(firstElement,secondElement);
+            break;
+    }
+
+    console.log(firstElement + " " + operator + " " + secondElement + " = " + operationResult);
 }
 
 function sum(a, b){
