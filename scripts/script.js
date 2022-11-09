@@ -28,7 +28,7 @@ function addDisplayContent(content){
     display.innerHTML = content;
 }
 
-function equation(content){
+function equation(){
     let num = "";
     let operator;
     let firstElement = 1;
@@ -120,7 +120,7 @@ function equation(content){
 
     switch(operator){
         case "+":
-            operationResult = add(firstElement, secondElement);
+            operationResult = sum(firstElement, secondElement);
             break;
         case "-":
             operationResult = sub(firstElement,secondElement);
@@ -133,7 +133,11 @@ function equation(content){
             break;
     }
 
-    console.log(firstElement + " " + operator + " " + secondElement + " = " + operationResult);
+    operations = 1;
+    operator = content[content.length - 1]
+    content = "";
+    content = operationResult + operator;
+    addDisplayContent(content);
 }
 
 function sum(a, b){
