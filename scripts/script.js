@@ -15,7 +15,7 @@ const sumBtn = document.getElementById("sum");
 const subBtn = document.getElementById("sub");
 const mulBtn = document.getElementById("mul");
 const divBtn = document.getElementById("div");
-
+let operations = 0;
 let content = "";
 
 function addDisplayContent(content){
@@ -23,22 +23,67 @@ function addDisplayContent(content){
 }
 
 function equation(content){
-    let numbersArr = [];
-    let operatorsArr = [];
-    let operation = 0;
     let num = "";
+    let operator;
+    let firstElement = 1;
+    let secondElement = 1;
 
-    if(content[0] == "+" || content[0] == "-" || content[0] == "*" || content[0] == "/"){
-        content = "SYNTAX ERROR";
-        addDisplayContent(content);
-        return
-    }   else if(content[content.length] == "+" || content[content.length] == "-" || content[content.length] == "*" || content[content.length] == "/"){
+    if(content[0] == "+" || content[0] == "*" || content[0] == "/"){
         content = "SYNTAX ERROR";
         addDisplayContent(content);
         return
     }
 
+    if(operations > 2){
+        content = "SYNTAX ERROR";
+        addDisplayContent(content);
+        return
+    }
+
+    if(content[0] == "-"){
+        firstElement = -1;
+    }
+
+    //first element definition
     for(let i = 0; i < content.length; i++){
+        switch(content[i]){
+            case "+":
+                    i = content.length;
+                    operator = "+";
+                    firstElement *= num;
+                    num = "";
+                break;
+            case "-":
+                    if(i != 0){
+                        i = content.length;
+                        operator = "-";
+                        firstElement *= num;
+                        num = "";
+                    }
+                break;
+            case "*":
+                    i = content.length;
+                    operator = "*";
+                    firstElement *= num;
+                    num = "";
+                break;
+            case "/":
+                    i = content.length;
+                    operator = "/";
+                    firstElement *= num;
+                    num = "/";
+                break;
+            default:
+                    num += content[i];
+                break;
+        }
+    }
+
+    console.log(operator);
+    console.log(firstElement);
+
+    
+    /* for(let i = 0; i < content.length; i++){
 
         switch(content[i]){
             case "+":
@@ -74,9 +119,9 @@ function equation(content){
                 break;
         }
 
-    }
+    } */
 
-    if(num != ""){
+    /* if(num != ""){
         numbersArr.push(num*1);
     }
 
@@ -127,7 +172,7 @@ function equation(content){
     }
 
     content += " = " + numbersArr[0];
-    addDisplayContent(content);
+    addDisplayContent(content); */
 }
 
 function sum(a, b){
@@ -210,21 +255,48 @@ equals.addEventListener("click", () => {
 //Operators keyboard events
 
 sumBtn.addEventListener("click", () => {
-    content += "+";
-    addDisplayContent(content);
+    operations++;
+
+    if(operations < 2){
+        content += "+";
+        addDisplayContent(content);
+    }   else{
+        equation(content);
+    }
 });
 
 subBtn.addEventListener("click", () => {
-    content += "-";
-    addDisplayContent(content);
+
+    if(content != ""){
+        operations++;
+    }
+
+    if(operations < 2){
+        content += "-";
+        addDisplayContent(content);
+    }   else{
+        equation(content);
+    }
 });
 
 mulBtn.addEventListener("click", () => {
-    content += "*";
-    addDisplayContent(content);
+    operations++;
+
+    if(operations < 2){
+        content += "*";
+        addDisplayContent(content);
+    }   else{
+        equation(content);
+    }
 });
 
 divBtn.addEventListener("click", () => {
-    content += "/";
-    addDisplayContent(content);
+    operations++;
+
+    if(operations < 2){
+        content += "/";
+        addDisplayContent(content);
+    }   else{
+        equation(content);
+    }
 });
