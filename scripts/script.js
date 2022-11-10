@@ -91,30 +91,42 @@ function equation(){
         }
     }
 
-    //Second element definition
-    for(let i = operatorIndex+1; i < content.length; i++){
-        switch(content[i]){
-            case "+":
-                    i = content.length;
-                    secondElement *= num;
-                break;
-            case "-":
-                    if(i != 0){
+    if(content[content.length - 1] == "="){
+        
+        operator = content[operatorIndex];
+
+        for(let i = operatorIndex + 1; i < content.length - 1; i++){
+            num += content[i];
+        }
+        console.log(num);
+
+        secondElement = num*1;
+    }   else{
+        //Second element definition
+        for(let i = operatorIndex+1; i < content.length; i++){
+            switch(content[i]){
+                case "+":
                         i = content.length;
                         secondElement *= num;
-                    }
-                break;
-            case "*":
-                    i = content.length;
-                    secondElement *= num;
-                break;
-            case "/":
-                    i = content.length;
-                    secondElement *= num;
-                break;
-            default:
-                    num += content[i];
-                break;
+                    break;
+                case "-":
+                        if(i != 0){
+                            i = content.length;
+                            secondElement *= num;
+                        }
+                    break;
+                case "*":
+                        i = content.length;
+                        secondElement *= num;
+                    break;
+                case "/":
+                        i = content.length;
+                        secondElement *= num;
+                    break;
+                default:
+                        num += content[i];
+                    break;
+            }
         }
     }
 
@@ -133,11 +145,21 @@ function equation(){
             break;
     }
 
-    operations = 1;
-    operator = content[content.length - 1]
-    content = "";
-    content = operationResult + operator;
-    addDisplayContent(content);
+    operator = content[content.length - 1];
+
+    if(operator == "="){
+        operations = 0;
+        content = content + operationResult;
+        addDisplayContent(content);
+        content = "" + operationResult;
+        console.log(content);
+    }   else{
+            operations = 1;
+            content = "";
+            content = operationResult + operator;
+            addDisplayContent(content);
+    }
+
 }
 
 function sum(a, b){
@@ -214,6 +236,9 @@ clear.addEventListener("click", () => {
 });
 
 equals.addEventListener("click", () => {
+    operations++;
+    content += "=";
+    console.log(content);
     equation(content);
 });
 
