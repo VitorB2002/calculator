@@ -159,7 +159,6 @@ function equation(){
             content = operationResult + operator;
             addDisplayContent(content);
     }
-
 }
 
 function sum(a, b){
@@ -179,7 +178,6 @@ function div(a, b){
 }
 
 //Numeric keyboard events
-
 zeroBtn.addEventListener("click", () => {
     content += "0";
     addDisplayContent(content);
@@ -243,7 +241,6 @@ equals.addEventListener("click", () => {
 });
 
 //Operators keyboard events
-
 sumBtn.addEventListener("click", () => {
     operations++;
 
