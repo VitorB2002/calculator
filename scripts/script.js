@@ -1,4 +1,7 @@
+//Document elements
 const display = document.getElementById("display");
+
+//Numeric buttons
 const oneBtn = document.getElementById("one");
 const twoBtn = document.getElementById("two");
 const threeBtn = document.getElementById("three");
@@ -10,124 +13,153 @@ const eightBtn = document.getElementById("eight");
 const nineBtn = document.getElementById("nine");
 const zeroBtn = document.getElementById("zero");
 const clear = document.getElementById("clear");
+
+//Operators buttons
 const equals = document.getElementById("equals");
 const sumBtn = document.getElementById("sum");
 const subBtn = document.getElementById("sub");
 const mulBtn = document.getElementById("mul");
 const divBtn = document.getElementById("div");
 
+let operations = 0;
 let content = "";
 
 function addDisplayContent(content){
     display.innerHTML = content;
 }
 
-function equation(content){
-    let numbersArr = [];
-    let operatorsArr = [];
-    let operation = 0;
+function equation(){
     let num = "";
+    let operator;
+    let firstElement = 1;
+    let secondElement = 1;
+    let operationResult;
+    let operatorIndex;
 
-    if(content[0] == "+" || content[0] == "-" || content[0] == "*" || content[0] == "/"){
-        content = "SYNTAX ERROR";
-        addDisplayContent(content);
-        return
-    }   else if(content[content.length] == "+" || content[content.length] == "-" || content[content.length] == "*" || content[content.length] == "/"){
+    if(content[0] == "+" || content[0] == "*" || content[0] == "/"){
         content = "SYNTAX ERROR";
         addDisplayContent(content);
         return
     }
 
-    for(let i = 0; i < content.length; i++){
+    if(operations > 2){
+        content = "SYNTAX ERROR";
+        addDisplayContent(content);
+        return
+    }
 
+    if(content[0] == "-"){
+        firstElement = -1;
+    }
+
+    //first element definition
+    for(let i = 0; i < content.length; i++){
         switch(content[i]){
             case "+":
-                    if(num != ""){
-                        numbersArr.push(num*1);
-                    }
-                    operatorsArr.push("+");
+                    operatorIndex = i;
+                    i = content.length;
+                    operator = "+";
+                    firstElement *= num;
                     num = "";
                 break;
             case "-":
-                    if(num != ""){
-                        numbersArr.push(num*1);
+                    if(i != 0){
+                        operatorIndex = i;
+                        i = content.length;
+                        operator = "-";
+                        firstElement *= num;
+                        num = "";
                     }
-                    operatorsArr.push("-");
-                    num = "";
                 break;
             case "*":
-                    if(num != ""){
-                        numbersArr.push(num*1);
-                    }
-                    operatorsArr.push("*");
+                    operatorIndex = i;
+                    i = content.length;
+                    operator = "*";
+                    firstElement *= num;
                     num = "";
                 break;
             case "/":
-                    if(num != ""){
-                        numbersArr.push(num*1);
-                    }
-                    operatorsArr.push("/");
+                    operatorIndex = i;
+                    i = content.length;
+                    operator = "/";
+                    firstElement *= num;
                     num = "";
                 break;
             default:
                     num += content[i];
                 break;
         }
-
     }
 
-    if(num != ""){
-        numbersArr.push(num*1);
+    if(content[content.length - 1] == "="){
+        
+        operator = content[operatorIndex];
+
+        for(let i = operatorIndex + 1; i < content.length - 1; i++){
+            num += content[i];
+        }
+        console.log(num);
+
+        secondElement = num*1;
+    }   else{
+        //Second element definition
+        for(let i = operatorIndex+1; i < content.length; i++){
+            switch(content[i]){
+                case "+":
+                        i = content.length;
+                        secondElement *= num;
+                    break;
+                case "-":
+                        if(i != 0){
+                            i = content.length;
+                            secondElement *= num;
+                        }
+                    break;
+                case "*":
+                        i = content.length;
+                        secondElement *= num;
+                    break;
+                case "/":
+                        i = content.length;
+                        secondElement *= num;
+                    break;
+                default:
+                        num += content[i];
+                    break;
+            }
+        }
     }
 
-    if(numbersArr.length <= operatorsArr.length){
-        content = "SYNTAX ERROR";
+    switch(operator){
+        case "+":
+            operationResult = sum(firstElement, secondElement);
+            break;
+        case "-":
+            operationResult = sub(firstElement,secondElement);
+            break;
+        case "*":
+            operationResult = mul(firstElement,secondElement);
+            break;
+        case "/":
+            operationResult = div(firstElement,secondElement);
+            break;
+    }
+
+    operator = content[content.length - 1];
+
+    if(operator == "="){
+        operations = 0;
+        content = content + operationResult;
         addDisplayContent(content);
-        return
+        content = "" + operationResult;
+        console.log(content);
+    }   else{
+            operations = 1;
+            content = "";
+            content = operationResult + operator;
+            addDisplayContent(content);
     }
 
-    //Multiplication priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "*"){
-            operation = mul(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    //Division priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "/"){
-            operation = div(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    //Sum priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "+"){
-            operation = sum(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    //Sub priority
-    for(let i = 0; i < operatorsArr.length; i++){
-        if(operatorsArr[i] == "-"){
-            operation = sub(numbersArr[i], numbersArr[i+1]);
-            numbersArr.splice(i, 2, operation);
-            operatorsArr.splice(i, 1);
-            i--;
-        }   
-    }
-
-    content += " = " + numbersArr[0];
-    addDisplayContent(content);
 }
 
 function sum(a, b){
@@ -204,27 +236,61 @@ clear.addEventListener("click", () => {
 });
 
 equals.addEventListener("click", () => {
+    operations++;
+    content += "=";
+    console.log(content);
     equation(content);
 });
 
 //Operators keyboard events
 
 sumBtn.addEventListener("click", () => {
-    content += "+";
-    addDisplayContent(content);
+    operations++;
+
+    if(operations < 2){
+        content += "+";
+        addDisplayContent(content);
+    }   else{
+        content += "+";
+        equation(content);
+    }
 });
 
 subBtn.addEventListener("click", () => {
-    content += "-";
-    addDisplayContent(content);
+
+    if(content != ""){
+        operations++;
+    }
+
+    if(operations < 2){
+        content += "-";
+        addDisplayContent(content);
+    }   else{
+        content += "-";
+        equation(content);
+    }
 });
 
 mulBtn.addEventListener("click", () => {
-    content += "*";
-    addDisplayContent(content);
+    operations++;
+
+    if(operations < 2){
+        content += "*";
+        addDisplayContent(content);
+    }   else{
+        content += "*";
+        equation(content);
+    }
 });
 
 divBtn.addEventListener("click", () => {
-    content += "/";
-    addDisplayContent(content);
+    operations++;
+
+    if(operations < 2){
+        content += "/";
+        addDisplayContent(content);
+    }   else{
+        content += "/";
+        equation(content);
+    }
 });
